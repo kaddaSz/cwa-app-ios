@@ -7,8 +7,6 @@ on:
       - release/1.11.x
   # pull_request event is required only for autolabeler
   pull_request:
-    branches:
-      - release/1.11.x
     # Only following types are handled by the action, but one can default to all as well
     types: [opened, reopened, synchronize]
 
@@ -29,3 +27,4 @@ jobs:
         #   disable-autolabeler: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
