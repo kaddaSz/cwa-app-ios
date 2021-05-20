@@ -2,7 +2,7 @@
     Corona Warn App - iOS
 </h1>
 
-TEST KS 3
+TEST KS 6
 
 <p align="center">
    <a href="https://github.com/corona-warn-app/cwa-app-ios/commits/" title="Last Commit"><img src="https://img.shields.io/github/last-commit/corona-warn-app/cwa-app-ios?style=flat"></a>
