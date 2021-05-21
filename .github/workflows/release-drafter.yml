@@ -43,7 +43,7 @@ jobs:
       - name: Decide how to go ahead
         id: decide
         run: |
-          echo 'latest release: ${{ steps.get_latest_tags.outputs.data }}'
+          echo 'latest release: ${{ fromJson(steps.get_latest_tags.outputs.data)[0].ref }}'
           DATA=${{ fromJson(steps.get_latest_tags.outputs.data)[0].ref }}
 #          echo Array first element: $DATA
 #          ARRAY=${DATA[0]}
