@@ -44,7 +44,8 @@ jobs:
         id: decide
         run: |
           echo latest release: ${{ fromJson(steps.get_latest_tags.outputs.data) }} 
-          ARRAY=fromJson(${{ steps.get_latest_tags.outputs.data }})
+          DATA=${{ steps.get_latest_tags.outputs.data }}
+          ARRAY=fromJson($DATA)
  
       
 #      - name: Build Changelog
