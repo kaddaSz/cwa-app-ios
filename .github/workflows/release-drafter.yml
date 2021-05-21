@@ -2,7 +2,7 @@ name: 'Release Drafter'
 on:
   push:
     tags:
-      - 'v*'
+      - 'v*-RC*'
 
 jobs:
   release:
