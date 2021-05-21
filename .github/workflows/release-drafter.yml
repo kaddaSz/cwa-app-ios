@@ -19,6 +19,11 @@ jobs:
           failOnError: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+     
+      - name: Echo Changelog
+        env:
+          CHANGELOG: ${{ steps.github_release.outputs.changelog }}
+        run: echo "$CHANGELOG"          
 
       - name: Create Release
         uses: actions/create-release@v1
