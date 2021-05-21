@@ -18,23 +18,50 @@ jobs:
         run: |
           env
           echo GITHUB_REF $GITHUB_REF
-          BRANCH=${GITHUB_REF#refs/heads/*}
-          TARGET_RELEASE=${GITHUB_REF#refs/heads/release/*}
-          echo Branch Name $BRANCH
-          echo Target Release $TARGET_RELEASE
-          echo "::set-output name=BRANCH_NAME::$BRANCH"
-          echo "::set-output name=TARGET_RELEASE::$TARGET_RELEASE"
+          echo GITHUB_BASE_REF $GITHUB_BASE_REF
+          echo GITHUB_HEAD_REF $GITHUB_HEAD_REF
+          var=${GITHUB_BASE_REF:8}
+          echo var: $var
+          FROM_TAG_PART1=v$(cut -d'.' -f 1 <<< $var).$(cut -d'.' -f 2 <<< $var).
+          TO_TAG=$GITHUB_BASE_REF
+          echo From Tag Part 1: $FROM_TAG_PART1
+          echo To Tag: $TO_TAG
+          echo "::set-output name=FROM_TAG_PART1::$FROM_TAG_PART1"
+          echo "::set-output name=TO_TAG::$TO_TAG"          
       
-#      - name: Build Changelog
-#        id: github_release
-#       uses: mikepenz/release-changelog-builder-action@v1
-#        with:
-#          failOnError: true
-#          configuration: ".github/release_config.json"
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Get latest Tags
+        uses: octokit/request-action@v2.x
+        id: get_latest_tags
+        with:
+          route: GET /repos/:owner/:repo/git/matching-refs/tags/:tag_name
+          owner: kaddaSz
+          repo: cwa-app-ios
+          tag_name: ${{ steps.calculate_compare_tags.outputs.FROM_TAG_PART1 }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Decide how to go ahead
+        id: determine-from-tag
+        run: |
+          echo 'latest release: ${{ fromJson(steps.get_latest_tags.outputs.data)[0].ref }}'
+          DATA=${{ fromJson(steps.get_latest_tags.outputs.data)[0].ref }}
+          echo Array first element: $DATA
+          TAG=${DATA#refs/tags/*}
+          echo Tag: $TAG
+          echo "::set-output name=FROM_TAG::$TAG"   
+      
+      - name: Build Changelog
+        id: github_release
+        uses: mikepenz/release-changelog-builder-action@v1
+        with:
+          failOnError: true
+          configuration: ".github/release_config.json"
+          fromTag: ${{ steps.determine-from-tag.outputs.FROM_TAG }}
+          toTag: ${{ steps.calculate_compare_tags.outputs.TO_TAG }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
      
-#      - name: Echo Changelog
-#        env:
-#          CHANGELOG: ${{ steps.github_release.outputs.changelog }}
-#        run: echo "$CHANGELOG"          
+      - name: Echo Changelog
+        env:
+          CHANGELOG: ${{ steps.github_release.outputs.changelog }}
+        run: echo "$CHANGELOG"          
