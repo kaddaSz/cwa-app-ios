@@ -2,8 +2,6 @@
     Corona Warn App - iOS
 </h1>
 
-TEST KS 7
-
 <p align="center">
    <a href="https://github.com/corona-warn-app/cwa-app-ios/commits/" title="Last Commit"><img src="https://img.shields.io/github/last-commit/corona-warn-app/cwa-app-ios?style=flat"></a>
    <a href="https://github.com/corona-warn-app/cwa-app-ios/issues" title="Open Issues"><img src="https://img.shields.io/github/issues/corona-warn-app/cwa-app-ios?style=flat"></a>
@@ -14,7 +12,6 @@ TEST KS 7
    <a href="https://api.reuse.software/info/github.com/corona-warn-app/cwa-app-ios" title="REUSE Status"><img src="https://api.reuse.software/badge/github.com/corona-warn-app/cwa-app-ios"></a>      
 </p>
 
-TEST 5
 
 <p align="center">
   <a href="#development">Development</a> •
@@ -24,9 +21,6 @@ TEST 5
   <a href="https://github.com/corona-warn-app/cwa-app-ios/releases">Changelog</a> •
   <a href="#licensing">Licensing</a>
 </p>
-
-
-TEST KS 4
 
 The goal of this project is to develop the official Corona-Warn-App for Germany based on the exposure notification API from [Apple](https://www.apple.com/covid19/contacttracing/) and [Google](https://www.google.com/covid19/exposurenotifications/). The apps (for both iOS and Android) use Bluetooth technology to exchange anonymous encrypted data with other mobile phones (on which the app is also installed) in the vicinity of an app user's phone. The data is stored locally on each user's device, preventing authorities or other parties from accessing or controlling the data. This repository contains the **native iOS implementation** of the Corona-Warn-App.
 
