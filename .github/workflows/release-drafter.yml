@@ -24,6 +24,6 @@ jobs:
           release_name: ${{ github.ref }}
           prerelease: true
           draft: true
-          body: ${{steps.github_release.outputs.changelog}}
+          body: ${{ steps.github_release.outputs.changelog }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
