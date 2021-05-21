@@ -41,13 +41,14 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       
       - name: Decide how to go ahead
-        id: decide
+        id: determine-from-tag
         run: |
           echo 'latest release: ${{ fromJson(steps.get_latest_tags.outputs.data)[0].ref }}'
           DATA=${{ fromJson(steps.get_latest_tags.outputs.data)[0].ref }}
           echo Array first element: $DATA
           TAG=${DATA#refs/tags/*}
           echo Tag: $TAG
+          echo "::set-output name=FROM_TAG::$TAG"   
       
 #      - name: Build Changelog
 #        id: github_release
