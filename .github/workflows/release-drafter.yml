@@ -43,7 +43,7 @@ jobs:
       - name: Decide how to go ahead
         id: decide
         run: |
-          "echo latest release: '${{ fromJson(steps.get_latest_release.outputs.data) }}'"         
+          "echo latest release: '${{ fromJson(steps.get_latest_tags.outputs.data) }}'"         
  
       
 #      - name: Build Changelog
