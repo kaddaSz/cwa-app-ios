@@ -44,7 +44,7 @@ jobs:
         id: output
         run: |
           echo 'echo latest Tags: ${{ steps.get_latest_tags.outputs.data }}'
-          FROM_TAG=${{ steps.get_latest_tags.outputs.data[0].ref }}'
+          FROM_TAG=${{ steps.get_latest_tags.outputs.data[0].ref }}
           echo From_Tag: $FROM_TAG
           echo "::set-output name=FROM_TAG::$FROM_TAG"
 
