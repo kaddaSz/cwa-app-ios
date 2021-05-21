@@ -18,12 +18,14 @@ jobs:
         run: |
           env
           echo GITHUB_REF $GITHUB_REF
-          BRANCH=${GITHUB_REF#refs/heads/*}
-          TARGET_RELEASE=${GITHUB_REF#refs/heads/release/*}
-          echo Branch Name $BRANCH
-          echo Target Release $TARGET_RELEASE
-          echo "::set-output name=BRANCH_NAME::$BRANCH"
-          echo "::set-output name=TARGET_RELEASE::$TARGET_RELEASE"
+          echo GITHUB_BASE_REF $GITHUB_BASE_REF
+          echo GITHUB_HEAD_REF $GITHUB_HEAD_REF
+          FROM_TAG_PART1=$($GITHUB_BASE_REF#release/*/x)
+          TO_TAG=$GITHUB_BASE_REF
+          echo From Tag Part 1: $FROM_TAG_PART1
+          echo To Tag: $TO_TAG
+          echo "::set-output name=TO_TAG::$TO_TAG"
+#          echo "::set-output name=TARGET_RELEASE::$TARGET_RELEASE"
       
 #      - name: Build Changelog
 #        id: github_release
