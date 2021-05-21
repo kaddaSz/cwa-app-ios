@@ -45,7 +45,8 @@ jobs:
         run: |
           echo latest release: ${{ fromJson(steps.get_latest_tags.outputs.data) }} 
           DATA=${{ fromJson(steps.get_latest_tags.outputs.data) }}
-          ARRAY=${DATA}
+          ARRAY=${DATA[0]}
+          echo Array first element: $ARRAY
  
       
 #      - name: Build Changelog
