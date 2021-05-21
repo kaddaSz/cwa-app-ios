@@ -2,11 +2,11 @@
     "categories": [
         {
             "title": "#### Bug Fixes",
-            "labels": ["fix"]
+            "labels": ["bug"]
         },
        {
             "title": "#### New Features",
-            "labels": ["feature"]
+            "labels": ["feature", "enhancement"]
         },
         {
             "title": "#### Accessibility",
@@ -22,7 +22,7 @@
         },            
         {
             "title": "#### Others / Chore",
-            "labels": ["community"]
+            "labels": []
         }                  
     ],
     "sort": "ASC",
