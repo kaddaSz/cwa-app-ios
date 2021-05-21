@@ -45,10 +45,9 @@ jobs:
         run: |
           echo 'latest release: ${{ fromJson(steps.get_latest_tags.outputs.data)[0].ref }}'
           DATA=${{ fromJson(steps.get_latest_tags.outputs.data)[0].ref }}
-#          echo Array first element: $DATA
-#          ARRAY=${DATA[0]}
-#          echo Array first element: $ARRAY
- 
+          echo Array first element: $DATA
+          TAG=${DATA#refs/tags/*}
+          echo Tag: $TAG
       
 #      - name: Build Changelog
 #        id: github_release
