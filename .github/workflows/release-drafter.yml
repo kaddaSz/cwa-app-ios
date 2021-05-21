@@ -26,8 +26,20 @@ jobs:
           TO_TAG=$GITHUB_BASE_REF
           echo From Tag Part 1: $FROM_TAG_PART1
           echo To Tag: $TO_TAG
-          echo "::set-output name=TO_TAG::$TO_TAG"
-#          echo "::set-output name=TARGET_RELEASE::$TARGET_RELEASE"
+          echo "::set-output name=FROM_TAG_PART1::$FROM_TAG_PART1"
+          echo "::set-output name=TO_TAG::$TO_TAG"          
+      
+      - name: Get latest Tags
+        uses: octokit/request-action@v2.x
+        id: get_latest_tags
+        with:
+          route: GET /repos/kaddaSz/cwa-app-ios/git/matching-refs/tags/${{ steps.calculate-branch-name.outputs.FROM_TAG_PART1 }}
+          owner: kaddaSz
+          repo: cwa-app-ios
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - run: "echo latest release: ${{ steps.get_latest_tags.outputs.data }}"
+
       
 #      - name: Build Changelog
 #        id: github_release
