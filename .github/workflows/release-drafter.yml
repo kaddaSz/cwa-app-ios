@@ -43,7 +43,7 @@ jobs:
       - name: Decide how should process continue
         id: output
         run: |
-          echo latest Tags: ${{ fromJson(steps.get_latest_tags.outputs.data[0]) }}
+          echo latest Tags: ${{ toJson(steps.get_latest_tags.outputs.data[0]) }}
  
       
 #      - name: Build Changelog
