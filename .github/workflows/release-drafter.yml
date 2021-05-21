@@ -45,7 +45,7 @@ jobs:
         run: |
           echo latest Tags: ${{ steps.get_latest_tags.outputs.data.*.ref[0] }}
           TAG=${{ steps.get_latest_tags.outputs.data }}
-          echo TAG: $TAG[0]
+          echo TAG: ${{ TAG[0] }}
       
 #      - name: Build Changelog
 #        id: github_release
