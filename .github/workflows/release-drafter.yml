@@ -43,9 +43,8 @@ jobs:
       - name: Decide how should process continue
         id: output
         run: |
-          echo latest Tags: ${{ steps.get_latest_tags.outputs.data.*.ref[0] }}
-          TAG=${{ steps.get_latest_tags.outputs.data }}
-          echo TAG: ${{ TAG[0] }}
+          echo latest Tags: ${{ toJson(steps.get_latest_tags.outputs.data.*.ref) }}
+ 
       
 #      - name: Build Changelog
 #        id: github_release
