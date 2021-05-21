@@ -56,8 +56,8 @@ jobs:
         with:
           failOnError: true
           configuration: ".github/release_config.json"
-          fromTag: ${{ setps.determine-from-tag.outputs.FROM_TAG }}
-          toTag: ${{ setps.calculate_compare_tags.outputs.TO_TAG }}
+          fromTag: ${{ steps.determine-from-tag.outputs.FROM_TAG }}
+          toTag: ${{ steps.calculate_compare_tags.outputs.TO_TAG }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
      
