@@ -33,7 +33,7 @@ jobs:
         uses: octokit/request-action@v2.x
         id: get_latest_tags
         with:
-          route: GET /repos/{owner}/{repo}/git/matching-refs/tags/{tag_name}
+          route: GET /repos/:owner/:repo}/git/matching-refs/tags/:tag_name
           owner: kaddaSz
           repo: cwa-app-ios
           tag_name: ${{ steps.calculate-branch-name.outputs.FROM_TAG_PART1 }}
