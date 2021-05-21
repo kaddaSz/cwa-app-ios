@@ -65,3 +65,14 @@ jobs:
         env:
           CHANGELOG: ${{ steps.github_release.outputs.changelog }}
         run: echo "$CHANGELOG"          
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: 'latest'
+          prerelease: true
+          draft: true
+          name: 'latest'
+          body: ${{steps.github_release.outputs.changelog}}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
