@@ -40,7 +40,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           
-      - run: "echo latest release: ${{ steps.get_latest_tags.outputs.data }}"
+      - run: 'echo latest release: ${{ steps.get_latest_tags.outputs.data }}'
 
       
 #      - name: Build Changelog
