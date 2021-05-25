@@ -4,6 +4,7 @@ on:
   pull_request:
     branches:
       - release/*
+    types: [opened, synchronize, closed, reopened, edited, labeled, unlabeled]
   
 jobs:
   release:
