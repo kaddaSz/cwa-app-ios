@@ -53,7 +53,6 @@ jobs:
         id: github_release
         uses: mikepenz/release-changelog-builder-action@v1
         with:
-          failOnError: true
           configuration: ".github/release_config.json"
           fromTag: ${{ steps.determine-from-tag.outputs.FROM_TAG }}
           toTag: ${{ steps.calculate_compare_tags.outputs.TO_TAG }}
