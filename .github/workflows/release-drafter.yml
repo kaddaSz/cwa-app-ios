@@ -74,6 +74,6 @@ jobs:
           name: 'latest'
           fail_on_unmatched_files: false
           body: ${{ steps.github_release.outputs.changelog }}
-          target_commitish: ${{ GITHUB_BASE_REF }}
+          target_commitish: ${{ github.base_ref }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
