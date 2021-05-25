@@ -66,7 +66,7 @@ jobs:
         run: echo "$CHANGELOG"          
 
       - name: Create Release
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@9729932bfb75c05ad1f6e3a729294e05abaa7001
         with:
           tag_name: 'latest'
           prerelease: true
@@ -74,5 +74,6 @@ jobs:
           name: 'latest'
           fail_on_unmatched_files: false
           body: ${{ steps.github_release.outputs.changelog }}
+          target_commitish: ${{ GITHUB_BASE_REF }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
