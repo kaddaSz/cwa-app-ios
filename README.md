@@ -17,6 +17,8 @@ CHANGE 2
 
 TEST 1
 
+TEST 3
+
 <p align="center">
   <a href="#development">Development</a> •
   <a href="#architecture--documentation">Documentation</a> •
