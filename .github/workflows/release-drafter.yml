@@ -72,6 +72,6 @@ jobs:
           prerelease: true
           draft: true
           name: 'latest'
-          body: ${{steps.github_release.outputs.changelog}}
+          body: ${{ steps.github_release.outputs.changelog }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
