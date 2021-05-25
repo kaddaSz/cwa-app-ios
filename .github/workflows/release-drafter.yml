@@ -64,6 +64,11 @@ jobs:
         env:
           CHANGELOG: ${{ steps.github_release.outputs.changelog }}
         run: echo "$CHANGELOG"          
+        
+      - name: Delete latest Draft release
+        uses: liudonghua123/delete-release-action@v1
+        with:
+          release_name: 'latest'        
 
       - name: Create Release
         uses: softprops/action-gh-release@9729932bfb75c05ad1f6e3a729294e05abaa7001
