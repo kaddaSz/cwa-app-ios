@@ -75,34 +75,27 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           
-      - name: Check if draft already exists
+      - name: Get releated draft release
         uses: edwardgeorge/jq-action@main
         id: get_draft_release
         with:
           input: ${{ steps.get_releases.outputs.data }}
           script: '[.[] | select((.draft == true) and (.name == "latest"))]'
           
-      - name: Echo draft release
+      - name: Get number of draft releases
+        id: get_num_of_drafts
         env:
           DRAFTREL: ${{ steps.get_draft_release.outputs.output }}
         run: |
           echo "$DRAFTREL"     
-          echo "${#DRAFTREL[@]}"
-        
-      - name: Get number of existing draft releases
-        uses: edwardgeorge/jq-action@main
-        id: get_num_of_drafts
-        with:
-          input: ${{ steps.get_releases.outputs.data }}
-          script: '[.[] | select((.draft == true) and (.name == "latest")) | length]'
-                        
-      - name: Echo number of drafts
-        run: echo '${{ steps.get_num_of_drafts.outputs.output }}'
-        
+          NUM_DRAFT_REL=${#DRAFTREL[@]}
+          echo "Number of found draft releases: $NUM_DRAFT_REL"
+          echo "::set-output name=number_of_drafts::$NUM_DRAFT_REL"   
+             
       - name: Delete existing draft releases
         uses: octokit/request-action@v2.x
         id: delete_draft_releases
-        if: ${{ steps.get_num_of_drafts.outputs.output > 0 }}
+        if: ${{ steps.get_num_of_drafts.outputs.number_of_drafts > 0 }}
         with:
           route: DELETE /repos/:owner/:repo/releases/:release_id
           owner: kaddaSz
