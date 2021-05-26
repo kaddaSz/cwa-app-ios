@@ -82,6 +82,17 @@ jobs:
           input: ${{ steps.get_releases.outputs.data }}
           script: '[.[] | select((.draft == true) and (.name == "latest"))]'
           
+      - name: Get number of draft releases 1
+        uses: edwardgeorge/jq-action@main
+        id: get_num_of_drafts1
+        with:
+          input: ${{ steps.get_draft_release.outputs.output }}
+          script: '[. | length]'    
+          
+      - name: Echo Result
+        run: |
+          echo ${{ steps.get_num_of_drafts1.outputs.output }}
+          
       - name: Get number of draft releases
         id: get_num_of_drafts
         env:
