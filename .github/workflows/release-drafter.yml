@@ -91,7 +91,7 @@ jobs:
         uses: octokit/request-action@v2.x
         id: delete_draft_releases
         with:
-          route: GET /repos/:owner/:repo/releases/:release_id
+          route: DELETE /repos/:owner/:repo/releases/:release_id
           owner: kaddaSz
           repo: cwa-app-ios
           release_id: ${{ fromJson(steps.get_draft_release.outputs.output)[0].id }}
