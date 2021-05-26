@@ -82,32 +82,23 @@ jobs:
           input: ${{ steps.get_releases.outputs.data }}
           script: '[.[] | select((.draft == true) and (.name == "latest"))]'
           
-      - name: Get number of draft releases 1
+      - name: Get number of draft releases
         uses: edwardgeorge/jq-action@main
-        id: get_num_of_drafts1
+        id: get_num_of_drafts
         with:
           input: ${{ steps.get_draft_release.outputs.output }}
           script: '[. | length]'    
           
-      - name: Echo Result
+      - name: Echo Number of Drafts
         run: |
-          echo "${{ steps.get_num_of_drafts1.outputs.output }}"
-          echo "${{ fromJson(steps.get_num_of_drafts1.outputs.output)[0] }}"
+          echo "${{ steps.get_num_of_drafts.outputs.output }}"
+          echo "${{ fromJson(steps.get_num_of_drafts.outputs.output)[0] }}"
           
-      - name: Get number of draft releases
-        id: get_num_of_drafts
-        env:
-          DRAFTREL: ${{ toJson(steps.get_draft_release.outputs.output)[0] }}
-        run: |
-          echo "$DRAFTREL"     
-          NUM_DRAFT_REL=${#DRAFTREL[@]}
-          echo "Number of found draft releases: $NUM_DRAFT_REL"
-          echo "::set-output name=number_of_drafts::$NUM_DRAFT_REL"   
              
       - name: Delete existing draft releases
         uses: octokit/request-action@v2.x
         id: delete_draft_releases
-        if: ${{ steps.get_num_of_drafts.outputs.number_of_drafts > 0 }}
+        if: ${{ fromJson(steps.get_num_of_drafts.outputs.output)[0] > 0 }}
         with:
           route: DELETE /repos/:owner/:repo/releases/:release_id
           owner: kaddaSz
