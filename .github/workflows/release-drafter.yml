@@ -85,7 +85,18 @@ jobs:
       - name: Echo draft release
         env:
           DRAFTREL: ${{ steps.get_draft_release.outputs.output }}
-        run: echo "$DRAFTREL"            
+        run: echo "$DRAFTREL"     
+        
+      - name: Delete existing draft releases
+        uses: octokit/request-action@v2.x
+        id: delete_draft_releases
+        with:
+          route: GET /repos/:owner/:repo/releases/:release_id
+          owner: kaddaSz
+          repo: cwa-app-ios
+          release_id: ${{ fromJson(steps.get_draft_release.outputs.output)[0].id }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}        
                 
       - name: Create Release
         uses: softprops/action-gh-release@9729932bfb75c05ad1f6e3a729294e05abaa7001
