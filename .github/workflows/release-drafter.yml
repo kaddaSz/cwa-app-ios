@@ -85,7 +85,7 @@ jobs:
       - name: Get number of draft releases
         id: get_num_of_drafts
         env:
-          DRAFTREL: ${{ toJson(steps.get_draft_release.outputs.output) }}
+          DRAFTREL: ${{ toJson(steps.get_draft_release.outputs.output)[0] }}
         run: |
           echo "$DRAFTREL"     
           NUM_DRAFT_REL=${#DRAFTREL[@]}
