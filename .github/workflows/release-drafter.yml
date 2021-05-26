@@ -80,7 +80,7 @@ jobs:
         id: get_draft_release
         with:
           input: ${{ steps.get_releases.outputs.data }}
-          script: '[.[] | select((.draft == true) and (.name == "latest")) | .id, .prerelease, .tag_name, .name]'
+          script: '[.[] | select((.draft == true) and (.name == "latest"))]'
           
       - name: Echo draft release
         env:
