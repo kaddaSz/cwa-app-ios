@@ -91,7 +91,8 @@ jobs:
           
       - name: Echo Result
         run: |
-          echo ${{ steps.get_num_of_drafts1.outputs.output }}
+          echo "${{ steps.get_num_of_drafts1.outputs.output }}"
+          echo "${{ fromJson(steps.get_num_of_drafts1.outputs.output)[0] }}"
           
       - name: Get number of draft releases
         id: get_num_of_drafts
