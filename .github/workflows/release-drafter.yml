@@ -86,10 +86,20 @@ jobs:
         env:
           DRAFTREL: ${{ steps.get_draft_release.outputs.output }}
         run: echo "$DRAFTREL"     
-        
+
+      - name: Get number of existing draft releases
+        id: get_num_of_drafts
+        env: 
+          drafts: ${{ toJson(steps.get_draft_release.outputs.output) }}
+        run: |
+          echo $drafts
+          length = $(echo $drafts | jq. | length)
+          echo "::set-output name=num_of_drafts::$length" 
+
       - name: Delete existing draft releases
         uses: octokit/request-action@v2.x
         id: delete_draft_releases
+        if: ${{ steps.get_num_of_drafts.outputs.num_of_drafts > 0 }}
         with:
           route: DELETE /repos/:owner/:repo/releases/:release_id
           owner: kaddaSz
