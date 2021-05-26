@@ -95,7 +95,7 @@ jobs:
           script: '[.[] | select((.draft == true) and (.name == "latest")) | length]'
                         
       - name: Echo number of drafts
-        run: echo ${{ steps.get_num_of_drafts.outputs.output }}     
+        run: echo '${{ steps.get_num_of_drafts.outputs.output }}'
         
       - name: Delete existing draft releases
         uses: octokit/request-action@v2.x
