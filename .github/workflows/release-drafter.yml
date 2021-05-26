@@ -79,7 +79,7 @@ jobs:
         uses: edwardgeorge/jq-action@main
         id: get_draft_release
         with:
-          input: ${{ fromJson(steps.get_releases.outputs.data) }}
+          input: ${{ steps.get_releases.outputs.data }}
           script: "[.[] | select(.draft == true) | .id, .prerelease, .tag_name, .name]"
           
       - name: Echo draft release
