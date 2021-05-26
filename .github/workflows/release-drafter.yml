@@ -87,7 +87,7 @@ jobs:
           DRAFTREL: ${{ steps.get_draft_release.outputs.output }}
         run: |
           echo "$DRAFTREL"     
-          echo "${#DRAFTREL[@]}
+          echo "${#DRAFTREL[@]}"
         
       - name: Get number of existing draft releases
         uses: edwardgeorge/jq-action@main
