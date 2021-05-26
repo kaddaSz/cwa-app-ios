@@ -84,7 +84,7 @@ jobs:
           
       - name: Echo draft release
         env:
-          DRAFTREL: ${{ fromJson(steps.get_draft_release.outputs.output).length }}
+          DRAFTREL: ${{ fromJson(steps.get_draft_release.outputs.output) }}
         run: echo "$DRAFTREL"     
         
       - name: Get number of existing draft releases
