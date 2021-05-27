@@ -114,7 +114,7 @@ jobs:
       - name: Create Release
         uses: softprops/action-gh-release@9729932bfb75c05ad1f6e3a729294e05abaa7001
         with:
-          tag_name: 'latest'
+          tag_name: 'next_${{ steps.calculate_compare_tags.outputs.FROM_TAG_PART1 }}x'
           prerelease: true
           draft: true
           name: 'Draft for next ${{ steps.calculate_compare_tags.outputs.FROM_TAG_PART1 }}x'
