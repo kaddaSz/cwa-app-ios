@@ -1,28 +1,127 @@
 name: 'Release Drafter'
-on:
-  push:
-    tags:
-      - 'v*-RC*'
 
+on:
+  pull_request:
+    branches:
+      - release/*
+    types: [opened, synchronize, closed, reopened, edited, labeled, unlabeled]
+  
 jobs:
-  release:
-    if: startsWith(github.ref, 'refs/tags/')
+  release-drafter:
+    if: ${{ github.event.pull_request.merged }}
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      
+      - name: Calculate Tags to Compare
+        id: calculate_compare_tags
+        run: |
+          env
+          echo "Github Event: ${{ github.event.pull_request.merged }}"
+          echo GITHUB_REF $GITHUB_REF
+          echo GITHUB_BASE_REF $GITHUB_BASE_REF
+          echo GITHUB_HEAD_REF $GITHUB_HEAD_REF
+          var=${GITHUB_BASE_REF:8}
+          echo var: $var
+          FROM_TAG_PART1=v$(cut -d'.' -f 1 <<< $var).$(cut -d'.' -f 2 <<< $var).
+          TO_TAG=$GITHUB_BASE_REF
+          echo From Tag Part 1: $FROM_TAG_PART1
+          echo To Tag: $TO_TAG
+          echo "::set-output name=FROM_TAG_PART1::$FROM_TAG_PART1"
+          echo "::set-output name=TO_TAG::$TO_TAG"          
+      
+      - name: Get latest Tags
+        uses: octokit/request-action@v2.x
+        id: get_latest_tags
+        with:
+          route: GET /repos/:owner/:repo/git/matching-refs/tags/:tag_name
+          owner: kaddaSz
+          repo: cwa-app-ios
+          tag_name: ${{ steps.calculate_compare_tags.outputs.FROM_TAG_PART1 }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Decide how to go ahead
+        id: determine-from-tag
+        run: |
+          echo 'latest release: ${{ fromJson(steps.get_latest_tags.outputs.data)[0].ref }}'
+          DATA=${{ fromJson(steps.get_latest_tags.outputs.data)[0].ref }}
+          echo Array first element: $DATA
+          TAG=${DATA#refs/tags/*}
+          echo Tag: $TAG
+          if ["$TAG" == ""]; then
+            TAG="release/1.10.x"
+            echo new Tag: $TAG
+          fi
+          echo "::set-output name=FROM_TAG::$TAG"   
+      
       - name: Build Changelog
         id: github_release
         uses: mikepenz/release-changelog-builder-action@v1
+        with:
+          configuration: ".github/release_config.json"
+          fromTag: ${{ steps.determine-from-tag.outputs.FROM_TAG }}
+          toTag: ${{ steps.calculate_compare_tags.outputs.TO_TAG }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Create Release
-        uses: actions/create-release@v1
+     
+      - name: Echo Changelog
+        env:
+          CHANGELOG: ${{ steps.github_release.outputs.changelog }}
+        run: echo "$CHANGELOG"          
+        
+      - name: Get Releases
+        uses: octokit/request-action@v2.x
+        id: get_releases
         with:
-          tag_name: ${{ github.ref }}
-          release_name: ${{ github.ref }}
+          route: GET /repos/:owner/:repo/releases
+          owner: kaddaSz
+          repo: cwa-app-ios
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          
+      - name: Get releated draft release
+        uses: edwardgeorge/jq-action@main
+        id: get_draft_release
+        with:
+          input: ${{ steps.get_releases.outputs.data }}
+          script: '[.[] | select((.draft == true) and (.name == "Draft for next ${{ steps.calculate_compare_tags.outputs.FROM_TAG_PART1 }}x"))]'
+          
+      - name: Get number of draft releases
+        uses: edwardgeorge/jq-action@main
+        id: get_num_of_drafts
+        with:
+          input: ${{ steps.get_draft_release.outputs.output }}
+          script: '[. | length]'    
+          
+      - name: Echo Number of Drafts
+        run: |
+          echo "${{ steps.get_num_of_drafts.outputs.output }}"
+          echo "${{ fromJson(steps.get_num_of_drafts.outputs.output)[0] }}"
+          
+             
+      - name: Delete existing draft releases
+        uses: octokit/request-action@v2.x
+        id: delete_draft_releases
+        if: ${{ fromJson(steps.get_num_of_drafts.outputs.output)[0] > 0 }}
+        with:
+          route: DELETE /repos/:owner/:repo/releases/:release_id
+          owner: kaddaSz
+          repo: cwa-app-ios
+          release_id: ${{ fromJson(steps.get_draft_release.outputs.output)[0].id }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}        
+                
+      - name: Create Release
+        uses: softprops/action-gh-release@9729932bfb75c05ad1f6e3a729294e05abaa7001
+        with:
+          tag_name: 'next_${{ steps.calculate_compare_tags.outputs.FROM_TAG_PART1 }}x'
           prerelease: true
           draft: true
-          allowUpdates: true
-          body: ${{steps.github_release.outputs.changelog}}
+          name: 'Draft for next ${{ steps.calculate_compare_tags.outputs.FROM_TAG_PART1 }}x'
+          fail_on_unmatched_files: false
+          body: ${{ steps.github_release.outputs.changelog }}
+          target_commitish: ${{ github.base_ref }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
