@@ -8,7 +8,6 @@ on:
   
 jobs:
   release-drafter:
-    if: github.event.pull_request.merged == 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -18,6 +17,7 @@ jobs:
         id: calculate_compare_tags
         run: |
           env
+          echo "Github Event: $github.event.pull_request.merged"
           echo GITHUB_REF $GITHUB_REF
           echo GITHUB_BASE_REF $GITHUB_BASE_REF
           echo GITHUB_HEAD_REF $GITHUB_HEAD_REF
