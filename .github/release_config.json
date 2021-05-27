@@ -22,7 +22,7 @@
         },            
         {
             "title": "#### Others / Chore",
-            "labels": []
+            "labels": ["chore"]
         }                  
     ],
     "sort": "ASC",
