@@ -51,7 +51,15 @@ jobs:
           TAG=${DATA#refs/tags/*}
           echo Tag: $TAG
           if ["$TAG" == ""]; then
-            TAG="release/1.10.x"
+            var=${GITHUB_BASE_REF:8}
+            echo var: $var
+            MAJOR_REL=$(cut -d'.' -f 1 <<< $var)
+            MINOR_REL=$(cut -d'.' -f 2 <<< $var)
+            echo Major Release: $MAJOR_REL
+            echo Minor Release: $MINOR_REL
+            PREV_REL=MINOR_REL - 1
+            echo Previous Minor Release: $MINOR_REL
+            TAG=release/$MAJOR_REL.PREV_REL.x
             echo new Tag: $TAG
           fi
           echo "::set-output name=FROM_TAG::$TAG"   
