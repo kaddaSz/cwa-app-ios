@@ -84,7 +84,7 @@ jobs:
         id: get_draft_release
         with:
           input: ${{ steps.get_releases.outputs.data }}
-          script: '[.[] | select((.draft == true) and (.name == "latest"))]'
+          script: '[.[] | select((.draft == true) and (.name == "Draft for next ${{ steps.calculate_compare_tags.outputs.FROM_TAG_PART1 }}x"))]'
           
       - name: Get number of draft releases
         uses: edwardgeorge/jq-action@main
@@ -117,7 +117,7 @@ jobs:
           tag_name: 'latest'
           prerelease: true
           draft: true
-          name: 'latest'
+          name: 'Draft for next ${{ steps.calculate_compare_tags.outputs.FROM_TAG_PART1 }}x'
           fail_on_unmatched_files: false
           body: ${{ steps.github_release.outputs.changelog }}
           target_commitish: ${{ github.base_ref }}
