@@ -27,7 +27,7 @@
     ],
     "sort": "ASC",
     "template": "${{CHANGELOG}}\n\n<details>\n<summary>Uncategorized</summary>\n\n${{UNCATEGORIZED}}\n</details>",
-    "pr_template": "- ${{TITLE}} #${{NUMBER}} \n ${BODY}",
+    "pr_template": "- ${{TITLE}} #${{NUMBER}} \n ${{BODY}}",
     "empty_template": "- no changes",
     "max_tags_to_fetch": 200,
     "max_pull_requests": 200,
