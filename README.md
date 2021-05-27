@@ -12,6 +12,10 @@
    <a href="https://api.reuse.software/info/github.com/corona-warn-app/cwa-app-ios" title="REUSE Status"><img src="https://api.reuse.software/badge/github.com/corona-warn-app/cwa-app-ios"></a>      
 </p>
 
+
+TEST CHANGE IN RELEASE/1.12.x
+NUMBER 2
+
 <p align="center">
   <a href="#development">Development</a> •
   <a href="#architecture--documentation">Documentation</a> •
