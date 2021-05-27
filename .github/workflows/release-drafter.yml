@@ -48,7 +48,7 @@ jobs:
           echo Array first element: $DATA
           TAG=${DATA#refs/tags/*}
           echo Tag: $TAG
-          if ["TAG" == ""]; then
+          if ["$TAG" == ""]; then
             TAG="release/1.10.x"
             echo new Tag: $TAG
           fi
