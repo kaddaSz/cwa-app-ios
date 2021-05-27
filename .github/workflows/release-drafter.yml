@@ -57,7 +57,7 @@ jobs:
             MINOR_REL=$(cut -d'.' -f 2 <<< $var)
             echo Major Release: $MAJOR_REL
             echo Minor Release: $MINOR_REL
-            PREV_REL=MINOR_REL-1
+            PREV_REL=$MINOR_REL-1
             echo Previous Minor Release: $PREV_REL
             TAG=release/$MAJOR_REL.$PREV_REL.x
             echo new Tag: $TAG
