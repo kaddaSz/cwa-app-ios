@@ -27,17 +27,11 @@
     ],
     "sort": "ASC",
     "template": "${{CHANGELOG}}\n\n<details>\n<summary>Uncategorized</summary>\n\n${{UNCATEGORIZED}}\n</details>",
-    "pr_template": "- ${{TITLE}} #${{NUMBER}} \n ${{BODY}}",
+    "pr_template": "- ${{TITLE}} #${{NUMBER}}",
     "empty_template": "- no changes",
     "max_tags_to_fetch": 200,
     "max_pull_requests": 200,
     "max_back_track_time_days": 90,
-    "transformers": [
-        {
-            "pattern": "(?:## Link to Jira\\W+.+)(EXPOSUREAPP-\\d{4})",
-            "target": "- $1"
-        }
-    ],    
     "ignore_labels": [
       "admin"
     ]
