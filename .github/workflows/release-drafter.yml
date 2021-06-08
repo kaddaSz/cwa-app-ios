@@ -40,17 +40,6 @@ jobs:
           echo Latest Tag: $LATEST_TAG
           echo "::set-output name=LATEST_TAG::$LATEST_TAG"          
       
-      - name: Get latest Tags
-        uses: octokit/request-action@v2.x
-        id: get_latest_tags
-        with:
-          route: GET /repos/:owner/:repo/git/matching-refs/tags/:tag_name
-          owner: kaddaSz
-          repo: cwa-app-ios
-          tag_name: ${{ steps.calculate_compare_tags.outputs.FROM_TAG_PART1 }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      
       - name: Decide how to go ahead
         id: determine-from-tag
         run: |
