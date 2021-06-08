@@ -11,7 +11,7 @@
    <a href="https://github-tools.github.io/github-release-notes/" title="Automated Release Notes"><img src="https://img.shields.io/badge/%F0%9F%A4%96-release%20notes-00B2EE.svg"></a>
    <a href="https://api.reuse.software/info/github.com/corona-warn-app/cwa-app-ios" title="REUSE Status"><img src="https://api.reuse.software/badge/github.com/corona-warn-app/cwa-app-ios"></a>      
 </p>
-
+TASK 2
 
 TEST CHANGE IN RELEASE/1.12.x
 NUMBER 2
