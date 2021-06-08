@@ -30,6 +30,14 @@ jobs:
           echo To Tag: $TO_TAG
           echo "::set-output name=FROM_TAG_PART1::$FROM_TAG_PART1"
           echo "::set-output name=TO_TAG::$TO_TAG"          
+          
+      - name: Get latest Tag
+        id: get_latest_tag
+        run: |
+          var=${{ steps.calculate_compare_tags.outputs.FROM_TAG_PART1 }}
+          echo var: $var
+          LATEST_TAG=$(git ls-remote --tags --refs --sort='-v:refname' origin v$var\*-RC\* | head -n 1 | cut -d '/' -f 3)
+          echo Latest Tag: $LATEST_TAG
       
       - name: Get latest Tags
         uses: octokit/request-action@v2.x
