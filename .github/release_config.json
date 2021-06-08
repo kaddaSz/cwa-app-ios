@@ -35,5 +35,7 @@
     "ignore_labels": [
       "admin"
     ],
-    "base_branches": "release/*"
+    "base_branches": [
+      "release/*"
+    ]
 }
