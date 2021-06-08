@@ -6,7 +6,7 @@
         },
        {
             "title": "#### New Features",
-            "labels": ["feature", "enhancement"]
+            "labels": ["feature", "enhancement", "task"]
         },
         {
             "title": "#### Accessibility",
