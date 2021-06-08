@@ -12,6 +12,8 @@
    <a href="https://api.reuse.software/info/github.com/corona-warn-app/cwa-app-ios" title="REUSE Status"><img src="https://api.reuse.software/badge/github.com/corona-warn-app/cwa-app-ios"></a>      
 </p>
 
+TASK 2
+
 TASK 1
 
 <p align="center">
