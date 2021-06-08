@@ -37,6 +37,8 @@ jobs:
           var=${{ steps.calculate_compare_tags.outputs.FROM_TAG_PART1 }}
           echo var: $var
           git --version
+          git s
+          git remote -v
           git ls-remote --tags --refs --sort='-v:refname' origin $var\*-RC\* | head -n 1 | cut -d '/' -f 3
           echo $(git ls-remote --tags --refs --sort='-v:refname' origin $var\*-RC\* | head -n 1 | cut -d '/' -f 3)
           LATEST_TAG=$(git ls-remote --tags --refs --sort='-v:refname' origin $var\*-RC\* | head -n 1 | cut -d '/' -f 3)
