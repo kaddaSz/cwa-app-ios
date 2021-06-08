@@ -36,13 +36,9 @@ jobs:
         run: |
           var=${{ steps.calculate_compare_tags.outputs.FROM_TAG_PART1 }}
           echo var: $var
-          git --version
-          git status
-          git remote -v
-          git ls-remote --tags --refs --sort='-v:refname' origin $var\*-RC\* | head -n 1 | cut -d '/' -f 3
-          echo $(git ls-remote --tags --refs --sort='-v:refname' origin $var\*-RC\* | head -n 1 | cut -d '/' -f 3)
           LATEST_TAG=$(git ls-remote --tags --refs --sort='-v:refname' origin $var\*-RC\* | head -n 1 | cut -d '/' -f 3)
           echo Latest Tag: $LATEST_TAG
+          echo "::set-output name=LATEST_TAG::$LATEST_TAG"          
       
       - name: Get latest Tags
         uses: octokit/request-action@v2.x
@@ -58,10 +54,8 @@ jobs:
       - name: Decide how to go ahead
         id: determine-from-tag
         run: |
-          echo 'latest release: ${{ fromJson(steps.get_latest_tags.outputs.data)[0].ref }}'
-          DATA=${{ fromJson(steps.get_latest_tags.outputs.data)[0].ref }}
-          echo Array first element: $DATA
-          TAG=${DATA#refs/tags/*}
+          echo 'latest tag: ${{ steps.get_latest_tag.outputs.LATEST_TAG }}'
+          TAG=${{ steps.get_latest_tag.outputs.LATEST_TAG }}
           echo Tag: $TAG
           if ["$TAG" == ""]; then
             var=${GITHUB_BASE_REF:8}
