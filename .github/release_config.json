@@ -34,5 +34,6 @@
     "max_back_track_time_days": 90,
     "ignore_labels": [
       "admin"
-    ]
+    ],
+    "base_branches": "release/*"
 }
